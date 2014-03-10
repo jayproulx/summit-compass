@@ -12,10 +12,14 @@
 			$scope.heading = 0;
 
 			$scope.repeat = function(cb, delay) {
-				$timeout(cb, delay);
+				$timeout(function() {
+					cb();
+					$scope.repeat(cb, delay);
+				}, delay);
 			};
 
 			$scope.repeat(function() {
+				// this needs to be improved by checking the change since the last update, and continue to incr/decr, regardless of number of rotations.
 				$scope.heading = $scope.heading < 359 ? $scope.heading + 1 : 0;
 			}, 200);
 		}
